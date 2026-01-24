@@ -13,3 +13,4 @@ Guidelines:
 1. {type} must be lowercase English (feat, fix, chore, docs, etc.).
 2. Header summary and Body descriptions must be in Korean.
 3. Be detailed in the body using '-' bullet points for each significant change.
+4. Keep technical terms in English
