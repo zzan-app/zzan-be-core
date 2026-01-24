@@ -5,7 +5,6 @@ import com.zzan.common.util.JwtUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import mu.KotlinLogging
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
@@ -17,27 +16,21 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthenticationFilter(
     private val jwtUtil: JwtUtil,
 ) : OncePerRequestFilter() {
-    companion object {
-        private val log = KotlinLogging.logger {}
-    }
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        SecurityContextHolder.clearContext() // 기존 인증정보 제거
         val token = extractTokenFromRequest(request)
 
-        if (token != null && jwtUtil.isValidToken(token) && jwtUtil.isAccessToken(token)) {
-            try {
+        try {
+            if (token != null && jwtUtil.isValidToken(token) && jwtUtil.isAccessToken(token)) {
                 setAuthenticationContext(token)
-            } catch (e: Exception) {
-                log.warn { "JWT 인증 처리 중 오류 발생: ${e.message}" }
-                SecurityContextHolder.clearContext()
             }
+            filterChain.doFilter(request, response)
+        } finally {
+            SecurityContextHolder.clearContext()
         }
-        filterChain.doFilter(request, response)
     }
 
     private fun extractTokenFromRequest(request: HttpServletRequest): String? {
