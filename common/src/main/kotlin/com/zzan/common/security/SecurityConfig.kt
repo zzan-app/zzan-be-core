@@ -1,5 +1,6 @@
 package com.zzan.common.security
 
+import com.zzan.common.util.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -12,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtUtil: JwtUtil
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -27,7 +28,10 @@ class SecurityConfig(
             .formLogin { it.disable() }
             .httpBasic { it.disable() }
             .anonymous { it.disable() }
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // JWT 인증 필터 추가
+            .addFilterBefore(
+                JwtAuthenticationFilter(jwtUtil),
+                UsernamePasswordAuthenticationFilter::class.java
+            ) // JWT 인증 필터 추가
             .build()
     }
 };
