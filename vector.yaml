@@ -1,0 +1,14 @@
+sources:
+    docker_logs:
+        type: "docker_logs"
+
+sinks:
+    better_stack:
+        type: "http"
+        inputs: [ "docker_logs" ]
+        uri: "https://in.logs.betterstack.com"
+        auth:
+            strategy: "bearer"
+            token: "${BETTER_STACK_SOURCE_TOKEN}"
+        encoding:
+            codec: "json"
