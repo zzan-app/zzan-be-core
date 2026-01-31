@@ -1,4 +1,4 @@
-package com.zzan.common.security
+package com.zzan.common.util
 
 import com.zzan.common.annotation.CurrentUser
 import com.zzan.common.dto.TokenUserInfo
