@@ -1,8 +1,8 @@
 package com.zzan.common.util
 
-import com.zzan.common.config.JwtProperties
 import com.zzan.common.dto.TokenUserInfo
 import com.zzan.common.exception.CustomException
+import com.zzan.common.security.JwtProperties
 import org.springframework.http.HttpStatus
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm
 import org.springframework.security.oauth2.jwt.*

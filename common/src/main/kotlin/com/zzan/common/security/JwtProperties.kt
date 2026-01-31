@@ -1,4 +1,4 @@
-package com.zzan.common.config
+package com.zzan.common.security
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
