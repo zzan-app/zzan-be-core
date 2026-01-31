@@ -3,7 +3,7 @@ package com.zzan.common.util
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.SerializerProvider
-import com.zzan.common.properties.ImageProperties
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
 
@@ -23,5 +23,14 @@ class ImageUrlSerializer(
         else "${imageProperties.baseUrl}$value"
 
         gen.writeString(fullUrl)
+    }
+
+    override fun serializeWithType(
+        value: String?,
+        gen: JsonGenerator,
+        serializers: SerializerProvider,
+        typeSer: TypeSerializer
+    ) {
+        serialize(value, gen, serializers)
     }
 }
