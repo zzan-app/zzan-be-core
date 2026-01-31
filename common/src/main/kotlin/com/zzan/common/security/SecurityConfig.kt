@@ -1,5 +1,6 @@
 package com.zzan.common.security
 
+import com.zzan.common.logging.ApiLoggingFilter
 import com.zzan.common.util.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,12 +19,12 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .csrf { it.disable() } // CSRF 보호 비활성화 (JWT 사용)
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) } // 세션 관리 정책 Stateless
+            .csrf { it.disable() }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers(HttpMethod.GET, "/**").permitAll()  // GET은 누구나
-                    .anyRequest().authenticated()  // 나머지는 인증 필요
+                    .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                    .anyRequest().authenticated()
             }
             .formLogin { it.disable() }
             .httpBasic { it.disable() }
@@ -31,7 +32,11 @@ class SecurityConfig(
             .addFilterBefore(
                 JwtAuthenticationFilter(jwtUtil),
                 UsernamePasswordAuthenticationFilter::class.java
-            ) // JWT 인증 필터 추가
+            )
+            .addFilterAfter(
+                ApiLoggingFilter(),
+                JwtAuthenticationFilter::class.java
+            )
             .build()
     }
-};
+}
