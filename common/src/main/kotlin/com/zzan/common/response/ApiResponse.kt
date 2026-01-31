@@ -1,8 +1,10 @@
 package com.zzan.common.response
 
+import java.time.Instant
+
 data class ApiResponse<T>(
     val success: Boolean,
-    val timestamp: Long = System.currentTimeMillis(),
+    val timestamp: Instant = Instant.now(),
     val message: String? = null,
     val data: T? = null
 ) {
