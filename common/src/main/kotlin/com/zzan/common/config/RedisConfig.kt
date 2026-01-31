@@ -1,13 +1,14 @@
 package com.zzan.common.config
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.beans.factory.annotation.Qualifier
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.StringRedisTemplate
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
@@ -16,20 +17,25 @@ class RedisConfig {
     @Bean
     fun redisTemplate(
         connectionFactory: RedisConnectionFactory,
-        @Qualifier("redisObjectMapper")
-        objectMapper: ObjectMapper
+        objectMapper: ObjectMapper,
     ): RedisTemplate<String, Any> {
-        val template = RedisTemplate<String, Any>()
-        template.connectionFactory = connectionFactory
+        val redisObjectMapper = objectMapper.copy().apply {
+            activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.EVERYTHING,
+                JsonTypeInfo.As.PROPERTY
+            )
+        }
 
-        // JSON Serializer 설정
-        val jackson2JsonRedisSerializer = Jackson2JsonRedisSerializer(objectMapper, Any::class.java)
+        val template = RedisTemplate<String, Any>()
+        val serializer = GenericJackson2JsonRedisSerializer(redisObjectMapper)
+
+        template.connectionFactory = connectionFactory
         template.keySerializer = StringRedisSerializer()
         template.hashKeySerializer = StringRedisSerializer()
-        template.valueSerializer = jackson2JsonRedisSerializer
-        template.hashValueSerializer = jackson2JsonRedisSerializer
-
-        template.setDefaultSerializer(jackson2JsonRedisSerializer)
+        template.valueSerializer = serializer
+        template.hashValueSerializer = serializer
+        template.defaultSerializer = serializer
         template.afterPropertiesSet()
         return template
     }

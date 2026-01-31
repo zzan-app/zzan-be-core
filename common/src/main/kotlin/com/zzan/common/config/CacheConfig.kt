@@ -1,36 +1,43 @@
 package com.zzan.common.config
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.beans.factory.annotation.Qualifier
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.springframework.cache.CacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
 
 @Configuration
 class CacheConfig {
-
     @Bean
     fun cacheManager(
         redisConnectionFactory: RedisConnectionFactory,
-        @Qualifier("redisObjectMapper") redisObjectMapper: ObjectMapper,
+        objectMapper: ObjectMapper,
     ): CacheManager {
+        val redisObjectMapper = objectMapper.copy().apply {
+            activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.EVERYTHING,
+                JsonTypeInfo.As.PROPERTY
+            )
+        }
+
+        val serializer = GenericJackson2JsonRedisSerializer(redisObjectMapper)
 
         val cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofDays(1)) // 기본 캐시 TTL은 1일
+            .entryTtl(Duration.ofDays(1))
             .serializeKeysWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer())
             )
             .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(
-                    Jackson2JsonRedisSerializer(redisObjectMapper, Any::class.java)
-                )
+                RedisSerializationContext.SerializationPair.fromSerializer(serializer)
             )
         return RedisCacheManager.builder(redisConnectionFactory)
             .cacheDefaults(cacheConfig)
