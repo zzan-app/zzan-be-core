@@ -9,7 +9,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":user"))
     implementation(project(":feed"))
-    implementation(project(":place"))
+    implementation(project(":zzan-place"))
     implementation(project(":liquor"))
     implementation(project(":infra"))
 
