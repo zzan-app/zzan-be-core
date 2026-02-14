@@ -1,7 +1,7 @@
 rootProject.name = "zzan"
 
 include("zzan-user")
-include("feed")
+include("zzan-feed")
 include("zzan-place")
 include("liquor")
 include("common")

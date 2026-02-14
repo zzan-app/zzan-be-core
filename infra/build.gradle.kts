@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation(project(":zzan-user"))
-    implementation(project(":feed"))
+    implementation(project(":zzan-feed"))
     implementation(project(":liquor"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")

@@ -8,7 +8,7 @@ plugins {
 dependencies {
     implementation(project(":common"))
     implementation(project(":zzan-user"))
-    implementation(project(":feed"))
+    implementation(project(":zzan-feed"))
     implementation(project(":zzan-place"))
     implementation(project(":liquor"))
     implementation(project(":infra"))
