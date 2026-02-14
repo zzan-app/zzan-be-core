@@ -10,7 +10,7 @@ dependencies {
     implementation(project(":zzan-user"))
     implementation(project(":zzan-feed"))
     implementation(project(":zzan-place"))
-    implementation(project(":liquor"))
+    implementation(project(":zzan-liquor"))
     implementation(project(":infra"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
