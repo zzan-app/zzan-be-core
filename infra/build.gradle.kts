@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(project(":zzan-core"))
     implementation(project(":zzan-user"))
     implementation(project(":zzan-feed"))
     implementation(project(":zzan-liquor"))
