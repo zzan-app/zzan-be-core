@@ -11,7 +11,7 @@ dependencies {
     implementation(project(":zzan-feed"))
     implementation(project(":zzan-place"))
     implementation(project(":zzan-liquor"))
-    implementation(project(":infra"))
+    implementation(project(":zzan-infra"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
