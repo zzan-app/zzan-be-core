@@ -7,13 +7,13 @@ COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 
 # Copy all module build files
-COPY app/build.gradle.kts ./app/
-COPY common/build.gradle.kts ./common/
-COPY user/build.gradle.kts ./user/
-COPY feed/build.gradle.kts ./feed/
-COPY liquor/build.gradle.kts ./liquor/
-COPY place/build.gradle.kts ./place/
-COPY infra/build.gradle.kts ./infra/
+COPY zzan-app/build.gradle.kts ./zzan-app/
+COPY zzan-core/build.gradle.kts ./zzan-core/
+COPY zzan-user/build.gradle.kts ./zzan-user/
+COPY zzan-feed/build.gradle.kts ./zzan-feed/
+COPY zzan-liquor/build.gradle.kts ./zzan-liquor/
+COPY zzan-place/build.gradle.kts ./zzan-place/
+COPY zzan-infra/build.gradle.kts ./zzan-infra/
 
 # Download dependencies
 RUN gradle dependencies --no-daemon || true
@@ -22,14 +22,14 @@ RUN gradle dependencies --no-daemon || true
 COPY . .
 
 # Build the application
-RUN gradle :app:bootJar -x test --no-daemon
+RUN gradle :zzan-app:bootJar -x test --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 # Copy the built jar from build stage
-COPY --from=build /app/app/build/libs/*.jar app.jar
+COPY --from=build /app/zzan-app/build/libs/*.jar app.jar
 
 # Expose port
 EXPOSE 8080
