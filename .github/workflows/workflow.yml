@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v3
+
+            -   name: Login to Docker Hub
+                uses: docker/login-action@v3
+                with:
+                    username: ${{ secrets.DOCKERHUB_USERNAME }}
+                    password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            -   name: Build and Push
+                uses: docker/build-push-action@v5
+                with:
+                    context: .
+                    push: true
+                    tags: sunbeen/zzan-main:latest
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
+
+            -   name: Copy files to Server
+                uses: appleboy/scp-action@v0.1.7
+                with:
+                    host: ${{ secrets.SERVER_HOST }}
+                    username: ubuntu
+                    key: ${{ secrets.SERVER_SSH_KEY }}
+                    source: "compose.yaml,vector.yaml"
+                    target: "~/"
+
+            -   name: Deploy to Server
+                uses: appleboy/ssh-action@v1
+                with:
+                    host: ${{ secrets.SERVER_HOST }}
+                    username: ubuntu
+                    key: ${{ secrets.SERVER_SSH_KEY }}
+                    script: |
+                        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                        docker pull sunbeen/zzan-main:latest
+                        docker compose up -d web --force-recreate
+                        docker image prune -f
+                        docker logout
