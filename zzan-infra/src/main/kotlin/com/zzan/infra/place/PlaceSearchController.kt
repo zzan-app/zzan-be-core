@@ -1,7 +1,7 @@
 package com.zzan.infra.place
 
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.response.ApiResponse
 import com.zzan.infra.place.dto.PlaceResult
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min

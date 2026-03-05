@@ -1,8 +1,8 @@
 package com.zzan.user.application.service
 
-import com.zzan.common.exception.CustomException
-import com.zzan.common.type.SocialProvider
-import com.zzan.common.util.JwtUtil
+import com.zzan.core.exception.CustomException
+import com.zzan.core.type.SocialProvider
+import com.zzan.core.util.JwtUtil
 import com.zzan.user.adapter.dto.out.JwtResponse
 import com.zzan.user.adapter.dto.out.LoginUrlResponse
 import com.zzan.user.application.port.`in`.AuthUseCase

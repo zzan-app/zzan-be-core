@@ -1,7 +1,7 @@
 package com.zzan.feed.adapter.out.entity
 
 import com.github.f4b6a3.ulid.UlidCreator
-import com.zzan.common.entity.BaseEntity
+import com.zzan.core.entity.BaseEntity
 import com.zzan.feed.domain.FeedImageTag
 import com.zzan.feed.domain.vo.RelativeCoordinate
 import jakarta.persistence.*

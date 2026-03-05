@@ -1,7 +1,7 @@
 package com.zzan.user.adapter.`in`
 
-import com.zzan.common.response.ApiResponse
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.response.ApiResponse
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.adapter.dto.`in`.SocialLoginRequest
 import com.zzan.user.adapter.dto.out.JwtResponse
 import com.zzan.user.adapter.dto.out.LoginUrlResponse

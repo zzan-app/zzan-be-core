@@ -1,6 +1,6 @@
 package com.zzan.place.application.service
 
-import com.zzan.common.exception.CustomException
+import com.zzan.core.exception.CustomException
 import com.zzan.place.adapter.dto.PlaceDetail
 import com.zzan.place.adapter.dto.PlaceInfoResponse
 import com.zzan.place.adapter.dto.ViewBoxRequest

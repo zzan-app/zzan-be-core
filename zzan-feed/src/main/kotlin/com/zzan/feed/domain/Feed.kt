@@ -1,7 +1,7 @@
 package com.zzan.feed.domain
 
-import com.zzan.common.event.feed.FeedCreated
-import com.zzan.common.event.feed.FeedDeleted
+import com.zzan.core.event.feed.FeedCreated
+import com.zzan.core.event.feed.FeedDeleted
 import com.zzan.feed.domain.vo.Score
 import java.time.Instant
 

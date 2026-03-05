@@ -1,8 +1,8 @@
 package com.zzan.user.domain
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.dto.TokenUserInfo
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.dto.TokenUserInfo
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.domain.vo.Birth
 import com.zzan.user.domain.vo.Email
 import com.zzan.user.domain.vo.Phone

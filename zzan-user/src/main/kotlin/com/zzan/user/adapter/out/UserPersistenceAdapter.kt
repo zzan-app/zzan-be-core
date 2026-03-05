@@ -1,6 +1,6 @@
 package com.zzan.user.adapter.out
 
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.application.port.out.UserRepository
 import com.zzan.user.domain.User
 import org.springframework.data.repository.findByIdOrNull

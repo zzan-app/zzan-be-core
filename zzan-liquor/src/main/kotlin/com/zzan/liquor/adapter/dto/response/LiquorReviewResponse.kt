@@ -1,6 +1,6 @@
 package com.zzan.liquor.adapter.dto.response
 
-import com.zzan.common.annotation.ImageUrl
+import com.zzan.core.annotation.ImageUrl
 import com.zzan.liquor.domain.LiquorReview
 import java.time.Instant
 

@@ -1,7 +1,7 @@
 package com.zzan.liquor.application.port.`in`
 
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
 import com.zzan.liquor.adapter.dto.request.CreateLiquorReview
 import com.zzan.liquor.adapter.dto.request.UpdateLiquorReview
 import com.zzan.liquor.adapter.dto.response.LiquorReviewResponse

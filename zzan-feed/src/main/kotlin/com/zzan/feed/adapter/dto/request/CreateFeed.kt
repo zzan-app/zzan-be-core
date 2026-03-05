@@ -1,6 +1,6 @@
 package com.zzan.feed.adapter.dto.request
 
-import com.zzan.common.dto.BaseUserInfo
+import com.zzan.core.dto.BaseUserInfo
 import com.zzan.feed.domain.Feed
 import com.zzan.feed.domain.vo.Score
 import jakarta.validation.Valid

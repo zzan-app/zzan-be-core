@@ -1,10 +1,10 @@
 package com.zzan.feed.adapter.`in`
 
-import com.zzan.common.annotation.CurrentUser
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.dto.IdResponse
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.annotation.CurrentUser
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.dto.IdResponse
+import com.zzan.core.response.ApiResponse
 import com.zzan.feed.adapter.dto.request.CreateFeed
 import com.zzan.feed.adapter.dto.response.FeedDetailResponse
 import com.zzan.feed.adapter.dto.response.FeedInfoResponse

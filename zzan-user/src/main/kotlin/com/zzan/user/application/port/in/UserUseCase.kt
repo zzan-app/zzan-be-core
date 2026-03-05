@@ -1,7 +1,7 @@
 package com.zzan.user.application.port.`in`
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.adapter.dto.`in`.SocialUserResult
 import com.zzan.user.adapter.dto.`in`.UpdateUser
 import com.zzan.user.adapter.dto.out.UserDetailResponse

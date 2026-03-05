@@ -1,8 +1,8 @@
 package com.zzan.feed.application.port.`in`
 
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.dto.ExistResponse
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.dto.ExistResponse
 import com.zzan.feed.adapter.dto.response.FeedInfoResponse
 
 interface FeedScrapUseCase {

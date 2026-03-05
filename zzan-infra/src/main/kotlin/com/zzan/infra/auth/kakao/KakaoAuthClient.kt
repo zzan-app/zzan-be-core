@@ -1,6 +1,6 @@
 package com.zzan.infra.auth.kakao
 
-import com.zzan.common.exception.CustomException
+import com.zzan.core.exception.CustomException
 import mu.KLogging
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.http.*

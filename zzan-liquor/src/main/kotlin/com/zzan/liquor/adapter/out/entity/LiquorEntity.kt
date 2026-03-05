@@ -1,7 +1,7 @@
 package com.zzan.liquor.adapter.out.entity
 
 import com.github.f4b6a3.ulid.UlidCreator
-import com.zzan.common.entity.AuditableEntity
+import com.zzan.core.entity.AuditableEntity
 import com.zzan.liquor.domain.Liquor
 import com.zzan.liquor.domain.vo.Score
 import jakarta.persistence.Column

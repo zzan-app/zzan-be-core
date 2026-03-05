@@ -1,9 +1,9 @@
 package com.zzan.feed.application.service
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.event.feed.FeedCreated
-import com.zzan.common.event.feed.FeedDeleted
-import com.zzan.common.exception.CustomException
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.event.feed.FeedCreated
+import com.zzan.core.event.feed.FeedDeleted
+import com.zzan.core.exception.CustomException
 import com.zzan.feed.adapter.dto.request.CreateFeed
 import com.zzan.feed.application.port.out.FeedEventPublisher
 import com.zzan.feed.application.port.out.FeedLiquorRepository

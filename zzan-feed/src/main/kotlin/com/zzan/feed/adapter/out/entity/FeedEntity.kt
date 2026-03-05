@@ -1,7 +1,7 @@
 package com.zzan.feed.adapter.out.entity
 
 import com.github.f4b6a3.ulid.UlidCreator
-import com.zzan.common.entity.AuditableEntity
+import com.zzan.core.entity.AuditableEntity
 import com.zzan.feed.domain.Feed
 import com.zzan.feed.domain.vo.Score
 import jakarta.persistence.*

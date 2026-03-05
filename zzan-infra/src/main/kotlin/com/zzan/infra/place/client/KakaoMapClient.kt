@@ -1,6 +1,6 @@
 package com.zzan.infra.place.client
 
-import com.zzan.common.exception.CustomException
+import com.zzan.core.exception.CustomException
 import com.zzan.infra.place.dto.KakaoPlaceSearchResult
 import mu.KLogging
 import org.springframework.boot.context.properties.EnableConfigurationProperties

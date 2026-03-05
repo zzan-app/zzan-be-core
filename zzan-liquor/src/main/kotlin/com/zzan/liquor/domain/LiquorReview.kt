@@ -1,6 +1,6 @@
 package com.zzan.liquor.domain
 
-import com.zzan.common.dto.BaseUserInfo
+import com.zzan.core.dto.BaseUserInfo
 import com.zzan.liquor.adapter.dto.request.CreateLiquorReview
 import com.zzan.liquor.adapter.dto.request.UpdateLiquorReview
 import java.time.Instant

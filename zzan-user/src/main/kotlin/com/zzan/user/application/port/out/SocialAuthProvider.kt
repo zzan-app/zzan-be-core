@@ -1,6 +1,6 @@
 package com.zzan.user.application.port.out
 
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.adapter.dto.`in`.SocialUserResult
 
 interface SocialAuthProvider {

@@ -1,6 +1,6 @@
 package com.zzan.feed.adapter.dto.response
 
-import com.zzan.common.annotation.ImageUrl
+import com.zzan.core.annotation.ImageUrl
 import com.zzan.feed.domain.Feed
 import java.time.Instant
 

@@ -1,8 +1,8 @@
 package com.zzan.user.adapter.out
 
 import com.github.f4b6a3.ulid.UlidCreator
-import com.zzan.common.entity.AuditableEntity
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.entity.AuditableEntity
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.domain.User
 import com.zzan.user.domain.UserRole
 import com.zzan.user.domain.vo.Birth

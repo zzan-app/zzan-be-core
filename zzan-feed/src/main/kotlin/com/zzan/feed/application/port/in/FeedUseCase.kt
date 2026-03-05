@@ -1,8 +1,8 @@
 package com.zzan.feed.application.port.`in`
 
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.dto.IdResponse
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.dto.IdResponse
 import com.zzan.feed.adapter.dto.request.CreateFeed
 import com.zzan.feed.adapter.dto.response.FeedDetailResponse
 import com.zzan.feed.adapter.dto.response.FeedInfoResponse

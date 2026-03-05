@@ -1,9 +1,9 @@
 package com.zzan.user.application.service
 
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.exception.CustomException
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.exception.CustomException
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.adapter.dto.`in`.SocialUserResult
 import com.zzan.user.adapter.dto.`in`.UpdateUser
 import com.zzan.user.adapter.dto.out.UserDetailResponse

@@ -1,6 +1,6 @@
 package com.zzan.place.adapter.`in`
 
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.response.ApiResponse
 import com.zzan.place.adapter.dto.PlaceDetail
 import com.zzan.place.adapter.dto.PlaceInfoResponse
 import com.zzan.place.adapter.dto.ViewBoxRequest

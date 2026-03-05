@@ -1,6 +1,6 @@
 package com.zzan.infra.place
 
-import com.zzan.common.dto.CursorPageResponse
+import com.zzan.core.dto.CursorPageResponse
 import com.zzan.infra.place.client.KakaoMapClient
 import com.zzan.infra.place.dto.PlaceResult
 import org.springframework.stereotype.Service

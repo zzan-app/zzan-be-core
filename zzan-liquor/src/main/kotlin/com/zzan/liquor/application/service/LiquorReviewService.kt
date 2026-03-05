@@ -1,9 +1,9 @@
 package com.zzan.liquor.application.service
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.exception.CustomException
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.exception.CustomException
 import com.zzan.liquor.adapter.dto.request.CreateLiquorReview
 import com.zzan.liquor.adapter.dto.request.UpdateLiquorReview
 import com.zzan.liquor.adapter.dto.response.LiquorReviewResponse

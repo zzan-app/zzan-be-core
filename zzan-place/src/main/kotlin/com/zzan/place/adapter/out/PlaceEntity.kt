@@ -1,7 +1,7 @@
 package com.zzan.place.adapter.out
 
 import com.github.f4b6a3.ulid.UlidCreator
-import com.zzan.common.entity.BaseEntity
+import com.zzan.core.entity.BaseEntity
 import com.zzan.place.domain.Place
 import com.zzan.place.domain.vo.Latitude
 import com.zzan.place.domain.vo.Longitude

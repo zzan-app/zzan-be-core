@@ -1,7 +1,7 @@
 package com.zzan.feed.adapter.out.event
 
-import com.zzan.common.event.feed.FeedCreated
-import com.zzan.common.event.feed.FeedDeleted
+import com.zzan.core.event.feed.FeedCreated
+import com.zzan.core.event.feed.FeedDeleted
 import com.zzan.feed.application.port.out.FeedEventPublisher
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component

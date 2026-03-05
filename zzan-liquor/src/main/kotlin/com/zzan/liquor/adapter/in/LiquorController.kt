@@ -1,7 +1,7 @@
 package com.zzan.liquor.adapter.`in`
 
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.response.ApiResponse
 import com.zzan.liquor.adapter.dto.response.LiquorDetailResponse
 import com.zzan.liquor.adapter.dto.response.LiquorInfoResponse
 import com.zzan.liquor.application.port.`in`.LiquorUseCase

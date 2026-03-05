@@ -1,7 +1,7 @@
 package com.zzan.liquor.application.service
 
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.exception.CustomException
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.exception.CustomException
 import com.zzan.liquor.adapter.dto.response.LiquorDetailResponse
 import com.zzan.liquor.adapter.dto.response.LiquorInfoResponse
 import com.zzan.liquor.application.port.`in`.LiquorUseCase

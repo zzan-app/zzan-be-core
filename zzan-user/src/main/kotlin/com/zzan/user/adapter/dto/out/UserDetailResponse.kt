@@ -1,6 +1,6 @@
 package com.zzan.user.adapter.dto.out
 
-import com.zzan.common.annotation.ImageUrl
+import com.zzan.core.annotation.ImageUrl
 import com.zzan.user.domain.User
 import com.zzan.user.domain.UserRole
 import java.time.LocalDate

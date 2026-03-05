@@ -1,7 +1,7 @@
 package com.zzan.user.adapter.`in`
 
-import com.zzan.common.annotation.CurrentUser
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.annotation.CurrentUser
+import com.zzan.core.response.ApiResponse
 import com.zzan.user.adapter.dto.`in`.UpdateUser
 import com.zzan.user.adapter.dto.out.UserDetailResponse
 import com.zzan.user.application.port.`in`.UserUseCase

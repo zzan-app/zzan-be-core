@@ -1,6 +1,6 @@
 package com.zzan.infra.storage.client
 
-import com.zzan.common.type.ImagePrefix
+import com.zzan.core.type.ImagePrefix
 import com.zzan.infra.storage.dto.PreSignedUrlResponse
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.s3.model.PutObjectRequest

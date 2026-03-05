@@ -1,7 +1,7 @@
 package com.zzan.place.application.service
 
-import com.zzan.common.event.feed.FeedCreated
-import com.zzan.common.event.feed.FeedDeleted
+import com.zzan.core.event.feed.FeedCreated
+import com.zzan.core.event.feed.FeedDeleted
 import com.zzan.place.application.port.out.PlaceRepository
 import com.zzan.place.domain.Place
 import com.zzan.place.domain.vo.Latitude

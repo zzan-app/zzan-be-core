@@ -1,6 +1,6 @@
 package com.zzan.user.adapter.dto.`in`
 
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.type.SocialProvider
 import com.zzan.user.domain.User
 
 data class SocialUserResult(

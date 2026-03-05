@@ -1,6 +1,6 @@
 package com.zzan.liquor.application.port.`in`
 
-import com.zzan.common.dto.CursorPageResponse
+import com.zzan.core.dto.CursorPageResponse
 import com.zzan.liquor.adapter.dto.response.LiquorDetailResponse
 import com.zzan.liquor.adapter.dto.response.LiquorInfoResponse
 

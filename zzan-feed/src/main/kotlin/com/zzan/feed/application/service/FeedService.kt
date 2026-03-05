@@ -1,10 +1,10 @@
 package com.zzan.feed.application.service
 
-import com.zzan.common.dto.BaseUserInfo
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.dto.IdResponse
-import com.zzan.common.exception.CustomException
+import com.zzan.core.dto.BaseUserInfo
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.dto.IdResponse
+import com.zzan.core.exception.CustomException
 import com.zzan.feed.adapter.dto.request.CreateFeed
 import com.zzan.feed.adapter.dto.response.FeedDetailResponse
 import com.zzan.feed.adapter.dto.response.FeedInfoResponse

@@ -1,10 +1,10 @@
 package com.zzan.liquor.adapter.`in`
 
-import com.zzan.common.annotation.CurrentUser
-import com.zzan.common.dto.CursorPageRequest
-import com.zzan.common.dto.CursorPageResponse
-import com.zzan.common.dto.ExistResponse
-import com.zzan.common.response.ApiResponse
+import com.zzan.core.annotation.CurrentUser
+import com.zzan.core.dto.CursorPageRequest
+import com.zzan.core.dto.CursorPageResponse
+import com.zzan.core.dto.ExistResponse
+import com.zzan.core.response.ApiResponse
 import com.zzan.liquor.adapter.dto.response.LiquorInfoResponse
 import com.zzan.liquor.application.port.`in`.LiquorScrapUseCase
 import jakarta.validation.Valid

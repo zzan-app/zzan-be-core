@@ -1,7 +1,7 @@
 package com.zzan.infra.auth
 
-import com.zzan.common.exception.CustomException
-import com.zzan.common.type.SocialProvider
+import com.zzan.core.exception.CustomException
+import com.zzan.core.type.SocialProvider
 import com.zzan.infra.auth.kakao.KakaoAuthClient
 import com.zzan.user.adapter.dto.`in`.SocialUserResult
 import com.zzan.user.application.port.out.SocialAuthProvider

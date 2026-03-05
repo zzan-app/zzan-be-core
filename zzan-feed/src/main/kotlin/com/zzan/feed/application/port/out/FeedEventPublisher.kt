@@ -1,7 +1,7 @@
 package com.zzan.feed.application.port.out
 
-import com.zzan.common.event.feed.FeedCreated
-import com.zzan.common.event.feed.FeedDeleted
+import com.zzan.core.event.feed.FeedCreated
+import com.zzan.core.event.feed.FeedDeleted
 
 interface FeedEventPublisher {
     fun publish(event: FeedCreated)
