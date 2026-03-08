@@ -1,0 +1,14 @@
+#!/bin/bash
+
+BRANCH=$(git symbolic-ref --short HEAD)
+ISSUE=$(echo "$BRANCH" | grep -oE '^(feature|fix|hotfix|chore|refactor)/([0-9]+)' | grep -oE '[0-9]+')
+COMMIT_SOURCE=$2
+
+# 일반 커밋 메시지인 경우에만 이슈 번호를 추가
+if [ -n "$COMMIT_SOURCE" ]; then
+  exit 0
+fi
+
+if [ -n "$ISSUE" ]; then
+  sed -i.bak "1s/$/ (#$ISSUE)/" "$1"
+fi
