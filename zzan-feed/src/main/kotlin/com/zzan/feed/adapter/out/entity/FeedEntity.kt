@@ -12,8 +12,7 @@ class FeedEntity(
     id: String,
 
     @Version
-    var version: Long = 0,
-
+    val version: Long? = 0,
 
     @Column(name = "user_id", length = 26)
     val userId: String,
@@ -24,25 +23,26 @@ class FeedEntity(
     @Column(name = "user_profile_image_url")
     var userProfileImageUrl: String? = null,
 
-
     @Column(name = "image_url")
-    val imageUrl: String? = null,
+    var imageUrl: String? = null,
 
-    val score: Double? = null,
+    var score: Double? = null,
 
     @Column(name = "liquor_count")
-    val liquorCount: Int = 0,
+    var liquorCount: Int = 0,
+
+    @Column(name = "view_count")
+    var viewCount: Long = 0,
 
     @Column(columnDefinition = "TEXT")
-    val text: String,
+    var text: String,
 
     @OrderBy("sortOrder ASC")
     @OneToMany(mappedBy = "feed", cascade = [CascadeType.ALL], orphanRemoval = true)
     val images: MutableSet<FeedImageEntity> = mutableSetOf(),
 
-
     @Column(name = "place_id", length = 26)
-    val kakaoPlaceId: String? = null,
+    var kakaoPlaceId: String? = null,
 
     @Column(name = "place_name")
     var placeName: String? = null,
@@ -50,8 +50,8 @@ class FeedEntity(
     @Column(name = "place_address")
     var placeAddress: String? = null,
 
-    val longitude: Double? = null,
-    val latitude: Double? = null,
+    var longitude: Double? = null,
+    var latitude: Double? = null,
 ) : AuditableEntity(id) {
 
     fun toDomain(): Feed {
@@ -66,6 +66,7 @@ class FeedEntity(
             images = images.map { it.toDomain() },
             score = score?.let { Score(it) },
             liquorCount = liquorCount,
+            viewCount = viewCount,
             text = text,
 
             kakaoPlaceId = kakaoPlaceId,
@@ -76,6 +77,25 @@ class FeedEntity(
             longitude = longitude,
             latitude = latitude,
         )
+    }
+
+    fun update(feed: Feed) {
+        this.userName = feed.userName
+        this.userProfileImageUrl = feed.userProfileImage
+
+        this.text = feed.text
+        this.score = feed.score?.value
+        this.imageUrl = feed.imageUrl
+
+        this.liquorCount = feed.liquorCount
+        this.viewCount = feed.viewCount
+
+        this.placeName = feed.placeName
+        this.placeAddress = feed.placeAddress
+        this.kakaoPlaceId = feed.kakaoPlaceId
+
+        this.longitude = feed.longitude
+        this.latitude = feed.latitude
     }
 
     companion object {

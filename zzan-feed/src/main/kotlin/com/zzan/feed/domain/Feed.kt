@@ -17,6 +17,7 @@ data class Feed(
 
     val score: Score? = null,
     val liquorCount: Int = 0,
+    val viewCount: Long = 0,
     val text: String,
 
     val kakaoPlaceId: String? = null,
@@ -52,4 +53,7 @@ data class Feed(
         )
     }
 
+    fun updateViewCount(count: Long): Feed {
+        return copy(viewCount = viewCount + count)
+    }
 }
