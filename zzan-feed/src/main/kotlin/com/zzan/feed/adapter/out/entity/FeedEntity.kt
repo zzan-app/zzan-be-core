@@ -12,7 +12,7 @@ class FeedEntity(
     id: String,
 
     @Version
-    val version: Long? = 0,
+    var version: Long? = 0,
 
     @Column(name = "user_id", length = 26)
     val userId: String,
