@@ -6,6 +6,7 @@ import com.zzan.feed.adapter.out.jpa.FeedJpaRepository
 import com.zzan.feed.application.port.out.FeedRepository
 import com.zzan.feed.domain.Feed
 import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.time.Instant
 
@@ -15,6 +16,11 @@ class FeedPersistenceAdapter(
 ) : FeedRepository {
     override fun save(feed: Feed): Feed =
         feedJpaRepository.save(FeedEntity.of(feed)).toDomain()
+
+    override fun update(feed: Feed) {
+        val entity = feedJpaRepository.findByIdOrNull(feed.id!!)
+        entity?.update(feed)
+    }
 
     override fun findById(feedId: String): Feed? =
         feedJpaRepository.findByIdWithImagesAndTags(feedId)?.toDomain()

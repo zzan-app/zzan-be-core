@@ -21,13 +21,18 @@ import org.springframework.transaction.annotation.Transactional
 class FeedService(
     private val feedRepository: FeedRepository,
     private val feedLiquorRepository: FeedLiquorRepository,
-    private val feedEventPublisher: FeedEventPublisher
+    private val feedEventPublisher: FeedEventPublisher,
 ) {
-
     fun getDetail(feedId: String): FeedDetailResponse {
         val feed = feedRepository.findById(feedId)
             ?: throw CustomException(HttpStatus.NOT_FOUND, "피드를 찾을 수 없습니다.")
         return FeedDetailResponse.of(feed)
+    }
+
+    @Transactional
+    fun syncViewCount(feedId: String, count: Long) {
+        val feed = feedRepository.findById(feedId) ?: return
+        feedRepository.update(feed.updateViewCount(count))
     }
 
     fun getByPlace(kakaoPlaceId: String, request: CursorPageRequest): CursorPageResponse<FeedInfoResponse> {

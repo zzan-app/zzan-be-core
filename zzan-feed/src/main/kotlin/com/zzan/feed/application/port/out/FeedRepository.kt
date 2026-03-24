@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable
 
 interface FeedRepository {
     fun save(feed: Feed): Feed
+    fun update(feed: Feed)
     fun findById(feedId: String): Feed?
     fun findByKakaoPlaceId(kakaoPlaceId: String, cursor: String?, pageable: Pageable): List<FeedInfoResponse>
     fun findByUserId(userId: String, cursor: String?, pageable: Pageable): List<FeedInfoResponse>

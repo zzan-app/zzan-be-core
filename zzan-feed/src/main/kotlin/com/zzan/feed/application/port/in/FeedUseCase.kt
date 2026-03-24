@@ -9,6 +9,7 @@ import com.zzan.feed.adapter.dto.response.FeedInfoResponse
 
 interface FeedUseCase {
     fun getDetail(feedId: String): FeedDetailResponse
+    fun syncViewCounts()
     fun getByPlace(kakaoPlaceId: String, request: CursorPageRequest): CursorPageResponse<FeedInfoResponse>
     fun getByUser(userId: String, request: CursorPageRequest): CursorPageResponse<FeedInfoResponse>
     fun getByLiquor(liquorId: String, request: CursorPageRequest): CursorPageResponse<FeedInfoResponse>

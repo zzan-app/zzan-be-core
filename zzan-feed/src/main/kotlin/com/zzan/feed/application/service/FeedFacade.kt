@@ -8,16 +8,30 @@ import com.zzan.feed.adapter.dto.response.FeedDetailResponse
 import com.zzan.feed.adapter.dto.response.FeedInfoResponse
 import com.zzan.feed.application.port.`in`.FeedUseCase
 import com.zzan.feed.application.port.out.FeedUserInfoProvider
+import com.zzan.feed.application.port.out.FeedViewCountRepository
+import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
 class FeedFacade(
     private val feedService: FeedService,
     private val userProvider: FeedUserInfoProvider,
+    private val feedViewCountRepository: FeedViewCountRepository
 ) : FeedUseCase {
+    private val logger = KotlinLogging.logger {}
 
-    override fun getDetail(feedId: String): FeedDetailResponse =
-        feedService.getDetail(feedId)
+    override fun getDetail(feedId: String): FeedDetailResponse {
+        runCatching { feedViewCountRepository.increment(feedId) }
+            .onFailure { e -> logger.warn(e) { "조회수 증가 요청 실패 feedId: $feedId" } }
+        return feedService.getDetail(feedId)
+    }
+
+    override fun syncViewCounts() {
+        val counts = feedViewCountRepository.getAllAndClear()
+        counts.forEach { (feedId, count) ->
+            feedService.syncViewCount(feedId, count)
+        }
+    }
 
     override fun getByPlace(kakaoPlaceId: String, request: CursorPageRequest): CursorPageResponse<FeedInfoResponse> =
         feedService.getByPlace(kakaoPlaceId, request)
