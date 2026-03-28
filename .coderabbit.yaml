@@ -4,10 +4,11 @@ knowledge_base:
     learnings:
         scope: auto
     file_patterns:
-        - "docs/**"
+        - "CLAUDE.md"
+        - ".github/git-commit-instructions.md"
 
 reviews:
-    profile: "chill"
+    profile: "assertive"
     high_level_summary: true
     poem: false
     collapse_walkthrough: false
@@ -22,23 +23,115 @@ reviews:
         - "!gradle/wrapper/**"
         - "!gradlew"
         - "!gradlew.bat"
+        - "!**/.terraform/**"
+        - "!terraform/.terraform.lock.hcl"
 
     path_instructions:
         -   path: "**"
             instructions: |
-                이 프로젝트는 Kotlin + Spring Boot 기반의 멀티모듈 프로젝트로, 헥사고날 아키텍처를 따릅니다.
-                모듈 구성: zzan-core(공통), zzan-user, zzan-feed, zzan-liquor, zzan-place, zzan-infra, zzan-app
-                각 모듈은 adapter(in/out), application(port/service), domain 레이어로 구성됩니다.
-                - 비즈니스 로직은 domain 및 application/service 레이어에만 위치해야 합니다.
-                - 외부 의존성(JPA, Redis 등)은 adapter/out 레이어에만 위치해야 합니다.
-                - 모듈 간 직접 의존은 지양하고, zzan-infra의 어댑터를 통해 연결합니다.
-                - 모듈 간 이벤트는 zzan-core의 event 패키지에 정의된 Spring Event로 통신합니다.
+                이 프로젝트는 Kotlin + Spring Boot 기반의 7개 멀티모듈 프로젝트로, 헥사고날 아키텍처를 따릅니다.
+                모듈 구성: zzan-core(공통 인프라), zzan-user, zzan-feed, zzan-liquor, zzan-place, zzan-infra(외부 서비스), zzan-app(조립)
+                각 도메인 모듈은 adapter(in/out), application(port/in, port/out, service), domain(vo/) 레이어로 구성됩니다.
 
-        -   path: "**/*Entity.kt"
-            instructions: "연관관계 매핑(FetchType, cascade)과 소프트 딜리트(@SQLRestriction) 적용 여부를 확인하세요."
+                [의존성 규칙]
+                - 도메인 모듈 간 직접 의존 금지. 크로스 모듈 통신은 zzan-infra 어댑터 또는 zzan-core 이벤트를 통해서만 가능합니다.
+                - 비즈니스 로직은 domain/ 또는 application/service/ 레이어에만 위치해야 합니다.
+                - Spring, JPA, Redis 등 외부 기술 의존성은 adapter/out/ 레이어에만 위치해야 합니다.
+                - application/service/는 port/out/ 인터페이스만 의존해야 하며, 구현체(JpaRepository, Redis 등)를 직접 참조하면 안 됩니다.
 
-        -   path: "**/*JpaRepository.kt"
-            instructions: "N+1 문제와 커서 페이지네이션 쿼리 조건을 확인하세요."
+                [공통 패턴]
+                - ID: ULID 사용 (26자 고정), UUID 사용 시 지적해주세요.
+                - 예외: CustomException(HttpStatus, message) 사용. 표준 예외를 직접 던지면 안 됩니다.
+                - API 응답: ApiResponse.ok(data) / ApiResponse.error(message) 래퍼 사용.
+                - 페이지네이션: 커서 기반(CursorPageRequest/CursorPageResponse). Offset 기반 페이지네이션 사용 시 지적해주세요.
+
+        -   path: "**/domain/**/*.kt"
+            instructions: |
+                도메인 모델 검토 기준:
+                - Spring, JPA 등 프레임워크 의존성이 없어야 합니다 (순수 Kotlin 클래스).
+                - Value Object(vo/)는 생성자에서 유효성 검증을 수행해야 합니다.
+                - 도메인 로직(상태 변경, 비즈니스 규칙)이 서비스 레이어가 아닌 도메인 모델에 구현되었는지 확인하세요.
+
+        -   path: "**/application/service/**/*.kt"
+            instructions: |
+                서비스 레이어 검토 기준:
+                - 클래스 레벨 @Transactional(readOnly = true), 쓰기 메서드에 @Transactional 개별 적용 패턴을 따르는지 확인하세요.
+                - JpaRepository, Redis 등 구현체를 직접 주입받지 않고, port/out/ 인터페이스만 사용하는지 확인하세요.
+                - 트랜잭션 경계 내에서 이벤트를 발행하는지, 발행 후 트랜잭션 커밋 보장이 필요한지 검토하세요.
+                - 단일 책임 원칙: 하나의 서비스가 너무 많은 Repository를 주입받으면 분리를 고려하세요.
+
+        -   path: "**/adapter/in/**/*.kt"
+            instructions: |
+                입력 어댑터(컨트롤러/스케줄러) 검토 기준:
+                - 인증이 필요한 엔드포인트는 @CurrentUser 어노테이션으로 userId를 주입받아야 합니다.
+                - 비즈니스 로직이 없어야 하며, UseCase 인터페이스(port/in)만 호출해야 합니다.
+                - 요청 DTO에 @Valid 및 Bean Validation 어노테이션이 적절히 적용되었는지 확인하세요.
+                - GET 요청은 인증 없이 허용, POST/PUT/DELETE는 인증 필요(SecurityConfig 정책 기준).
+
+        -   path: "**/adapter/out/entity/**/*.kt"
+            instructions: |
+                JPA 엔티티 검토 기준:
+                - 소프트 딜리트가 필요한 엔티티는 AuditableEntity를 상속해야 합니다 (@SQLRestriction("deleted_at IS NULL") 자동 적용).
+                - 연관관계 FetchType 기본값(LAZY) 준수 여부를 확인하세요. EAGER 사용 시 반드시 이유가 명확해야 합니다.
+                - cascade 설정이 의도치 않은 삭제/저장을 유발하지 않는지 확인하세요.
+                - 도메인 모델과의 변환 메서드(toDomain(), of() 등)에서 필드 누락이 없는지 확인하세요.
+
+        -   path: "**/adapter/out/jpa/**/*.kt"
+            instructions: |
+                JPA Repository 검토 기준:
+                - N+1 쿼리 위험이 있는 경우 @EntityGraph 또는 fetch join 사용을 권장하세요.
+                - 커서 기반 페이지네이션: 쿼리에서 cursor가 null이면 전체 조회, null이 아니면 cursor 이후 데이터만 조회하는 조건이 있어야 합니다.
+                - 대량 처리 쿼리에 적절한 인덱스 힌트 또는 조건이 있는지 확인하세요.
+
+        -   path: "**/application/port/**/*.kt"
+            instructions: |
+                포트 인터페이스 검토 기준:
+                - 인터페이스에 구현 세부사항(JPA, Redis 등 기술 용어)이 노출되지 않아야 합니다.
+                - 메서드 시그니처가 도메인 모델을 기준으로 정의되어야 합니다.
+
+        -   path: "**/adapter/out/event/**/*.kt"
+            instructions: |
+                이벤트 발행 어댑터 검토 기준:
+                - Spring ApplicationEventPublisher를 사용하는지 확인하세요.
+                - FeedEventPublisher 등 port/out 인터페이스를 구현해야 합니다.
+
+        -   path: "zzan-core/src/main/kotlin/com/zzan/core/event/**/*.kt"
+            instructions: |
+                도메인 이벤트 정의 검토 기준:
+                - 이벤트는 data class로 불변 상태를 유지해야 합니다.
+                - 이벤트 소비자(@TransactionalEventListener + @Async)가 필요한 정보를 이벤트에 모두 포함하는지 확인하세요.
+                - 이벤트 처리 실패 시 재처리 전략(retry, DLQ)이 고려되었는지 검토하세요.
+
+        -   path: "zzan-core/src/main/kotlin/com/zzan/core/security/**/*.kt"
+            instructions: |
+                보안 설정 검토 기준:
+                - SecurityConfig 변경 시 인증/인가 정책의 의도치 않은 변경이 없는지 꼼꼼히 검토하세요.
+                - JWT 토큰 검증 로직에서 만료, 서명 검증이 모두 처리되는지 확인하세요.
+                - 민감 정보(JWT secret, AWS key 등)가 코드에 하드코딩되지 않았는지 반드시 확인하세요.
+
+        -   path: "zzan-infra/**/*.kt"
+            instructions: |
+                인프라 어댑터 검토 기준:
+                - 외부 API(Kakao, AWS S3) 호출 실패 시 적절한 예외 처리와 fallback이 있는지 확인하세요.
+                - API 키, 시크릿 등 민감 정보는 반드시 환경 변수로 주입받아야 합니다.
+                - 외부 API 응답을 도메인 모델이나 포트 인터페이스의 타입으로 변환하는 책임이 이 레이어에 있어야 합니다.
+
+        -   path: "**/src/test/**/*.kt"
+            instructions: |
+                테스트 검토 기준:
+                - MockK(@MockK, @InjectMockKs, @ExtendWith(MockKExtension::class)) 패턴을 따르는지 확인하세요.
+                - @Nested + @DisplayName으로 테스트 케이스를 구조화하는지 확인하세요.
+                - 테스트 픽스처(도메인 객체 생성)가 실제 유효성 검증 조건을 만족하는지 확인하세요.
+                - 서비스 테스트는 Spring 컨텍스트 없이 순수 단위 테스트로 작성되어야 합니다.
+
+        -   path: "build.gradle.kts"
+            instructions: "의존성 추가 시 모듈 간 순환 의존이 발생하지 않는지, 도메인 모듈이 다른 도메인 모듈을 의존하지 않는지 확인하세요."
+
+        -   path: "**/build.gradle.kts"
+            instructions: "새 의존성 추가 시 zzan-core에 이미 api()로 선언된 의존성과 중복되지 않는지 확인하세요."
+
+        -   path: "terraform/**"
+            instructions: "인프라 변경 시 환경 변수 및 시크릿이 코드에 하드코딩되지 않았는지 확인하세요."
 
     auto_review:
         enabled: true
