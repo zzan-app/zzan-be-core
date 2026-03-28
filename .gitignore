@@ -60,3 +60,6 @@ Thumbs.db
 
 ### environment variables ###
 .env
+
+### zip files ###
+*.zip
