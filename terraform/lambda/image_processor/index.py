@@ -43,24 +43,30 @@ def handler(event, context):
         response = s3.get_object(Bucket=bucket, Key=key)
         image_data = response['Body'].read()
 
-        image = Image.open(io.BytesIO(image_data))
-        image.thumbnail(THUMBNAIL_SIZE)
-
         buffer = io.BytesIO()
-        image.save(buffer, format=image.format or "JPEG")
-        buffer.seek(0)
+        try:
+            image = Image.open(io.BytesIO(image_data))
+            image.thumbnail(THUMBNAIL_SIZE)
 
-        # feed-images/uuid.png -> thumbnail/feed-images/uuid.png
-        thumbnail_key = "thumbnail/" + key
+            image.save(buffer, format=image.format or "JPEG")
+            buffer.seek(0)
 
-        s3.put_object(
-            Bucket=bucket,
-            Key=thumbnail_key,
-            Body=buffer,
-            ContentType=f"image/{(image.format or 'jpeg').lower()}"
-        )
+            # feed-images/uuid.png -> thumbnail/feed-images/uuid.png
+            thumbnail_key = "thumbnail/" + key
 
-        print(f"Thumbnail created: {thumbnail_key}")
-        results.append({"status": "success", "thumbnail_key": thumbnail_key})
+            s3.put_object(
+                Bucket=bucket,
+                Key=thumbnail_key,
+                Body=buffer,
+                ContentType=f"image/{(image.format or 'jpeg').lower()}"
+            )
+
+            print(f"Thumbnail created: {thumbnail_key}")
+            results.append({"status": "success", "thumbnail_key": thumbnail_key})
+        except Exception as e:
+            print(f"Failed to process image {key}: {e}")
+            results.append({"status": "error", "key": key, "reason": str(e)})
+        finally:
+            buffer.close()
 
     return results
