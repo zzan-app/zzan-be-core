@@ -183,8 +183,6 @@ resource "aws_security_group" "fastapi" {
     }
 }
 
-# 기존 Key Pair 사용
-
 # EC2 Instance - Nginx
 resource "aws_instance" "nginx" {
     ami           = var.ami_id
