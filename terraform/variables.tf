@@ -43,5 +43,4 @@ variable "fastapi_instance_type" {
 variable "bucket_name" {
     description = "S3 bucket name for image storage"
     type        = string
-    default     = "zzan-liquor-bucket"
 }
