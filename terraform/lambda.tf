@@ -1,5 +1,5 @@
 locals {
-    pillow_layer_arn = "arn:aws:lambda:ap-northeast-2:770693421928:layer:Klayers-p312-Pillow:10"
+    pillow_layer_arn = "arn:aws:lambda:${var.aws_region}:770693421928:layer:Klayers-p312-Pillow:10"
 
     lambda_functions = {
         image_processor = {
