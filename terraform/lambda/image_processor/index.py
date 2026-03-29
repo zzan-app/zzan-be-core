@@ -46,21 +46,18 @@ def handler(event, context):
         image = Image.open(io.BytesIO(image_data))
         image.thumbnail(THUMBNAIL_SIZE)
 
-        if image.mode in ("RGBA", "P"):
-            image = image.convert("RGB")
-
         buffer = io.BytesIO()
-        image.save(buffer, format="JPEG", quality=85)
+        image.save(buffer, format=image.format or "JPEG")
         buffer.seek(0)
 
-        # feed-images/uuid.jpg -> thumbnail/feed-images/uuid.jpg
+        # feed-images/uuid.png -> thumbnail/feed-images/uuid.png
         thumbnail_key = "thumbnail/" + key
 
         s3.put_object(
             Bucket=bucket,
             Key=thumbnail_key,
             Body=buffer,
-            ContentType="image/jpeg"
+            ContentType=f"image/{(image.format or 'jpeg').lower()}"
         )
 
         print(f"Thumbnail created: {thumbnail_key}")
