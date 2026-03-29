@@ -51,5 +51,5 @@ def handler(event, context):
         ContentType="image/jpeg"
     )
 
-    print(f"Thumbnail created: {thumbnail_key}")ㅇ
+    print(f"Thumbnail created: {thumbnail_key}")
     return {"status": "success", "thumbnail_key": thumbnail_key}
